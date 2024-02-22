@@ -45,14 +45,14 @@
                         <h3 class="card-title">Tasks</h3>
                         <div class="card-tools">
                             <div class="input-group input-group-sm">
-                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                <input type="text" name="table_search" id="searchBox" class="form-control float-right" onkeyup="searchFromTable()" placeholder="Search">
 
                             </div>
                         </div>
                     </div>
 
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
+                        <table class="table table-hover text-nowrap" id="tasksTable">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -124,6 +124,29 @@
                 imgPreview.style.display = "block";
                 imgPreview.innerHTML = '<img src="' + this.result + '" />';
             });
+        }
+    }
+
+    function searchFromTable() {
+        input = document.getElementById("searchBox");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("tasksTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (var j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break;
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
         }
     }
 </script>
