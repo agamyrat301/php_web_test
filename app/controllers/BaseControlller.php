@@ -15,9 +15,6 @@ class BaseController {
 			$filename = "./app/views/404.view.php";
             include $filename;
 		}
-        $content = ob_get_clean();
-
-        echo $content;
 	}
 
      public static function redirect($route)

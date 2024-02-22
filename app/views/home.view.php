@@ -1,39 +1,21 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Php task</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">List Item1</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">List Item2</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">List Item2</a>
-                </li>
+<?php require './app/includes/head.php' ?>
+<style>
+    #img-preview {
+        display: none;
+        width: 300px;
+        border: 2px dashed #333;
+        margin-bottom: 20px;
+    }
 
-            </ul>
+    #img-preview img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+</style>
 
-            <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-
-                <div class="btn-group">
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <?= User::getDisplayName() ?>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a href="/auth/logout" class="dropdown-item">Logout</a></li>
-                    </ul>
-                </div>
-            </ul>
-
-        </div>
-    </div>
-</nav>
-<main class="overflow-x-hidden ">
+<?php require './app/includes/nav.php' ?>
+<main class="overflow-x-hidden">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -62,7 +44,7 @@
                                     <th scope="col">colorCode </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tableBody">
                                 <?php foreach ($tasks as $key => $val) { ?>
                                     <tr>
                                         <th scope="row"><?= $key ?></th>
@@ -107,6 +89,8 @@
     </div>
 </main>
 
+<?php require './app/includes/bottom.php' ?>
+
 <script>
     const chooseFile = document.getElementById("choose-file");
     const imgPreview = document.getElementById("img-preview");
@@ -149,4 +133,34 @@
             }
         }
     }
+
+    function loadTasks() {
+
+        $.ajax({
+            url: window.location.pathname, // Replace with the actual URL of your PHP file
+            type: "GET",
+            dataType: "json", // Specify the expected data type
+            data: {
+                query: "ajax"
+            },
+            success: function(response) {
+                console.log(response, 'HEREEEE')
+                const tableBody = document.getElementById("tableBody");
+                tableBody.innerHTML = ''; // Clear existing table rows
+                response.forEach((item,index) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td>${index}</td><td>${item.task}</td><td>${item.title}</td><td>${item.description}</td><td>     <div style="background-color:${item.colorCode};height: 40px;width: 40px;"></div></td>`;
+                    tableBody.appendChild(row);
+                });
+
+            },
+            error: function(xhr, status, error) {
+                console.log(error)
+                // Handle errors here
+                console.error(xhr);
+            }
+        });
+    }
+
+    setInterval(loadTasks, 5000); // 5 minutes * 60 seconds * 1000 milliseconds
 </script>

@@ -2,7 +2,7 @@
 
 class Task
 {
-    public static function login($method, $url, $headers = [],$post_fields = []):Bool
+    public static function login($method, $url, $headers = [],$post_fields = []):Bool|array
     {
 
         $response =  self::FetchApi($method, $url, $headers, $post_fields);
@@ -12,19 +12,14 @@ class Task
             $_SESSION['user']['expires_at'] = time() + $response['oauth']['expires_in']; // Store expiration time
             return true;
         }
-        return false;
+        return $response;
     }
 
     public static function getTasks(): Bool|array
     {
-
-        if (isset($_SESSION['user']['expires_at']) && $_SESSION['user']['expires_at'] < time()) {
-           // User::login();
-        }
-
-
         $headers = [
             "Authorization: Bearer ".User::$access_token,
+            "Content-Type: application/json"
         ];
         return self::FetchApi('GET', TASKS_SELECT_URL, $headers);
 
@@ -47,8 +42,12 @@ class Task
         ]);
         $response = curl_exec($curl);
         $err = curl_error($curl);
-
         curl_close($curl);
+
+        if ($err) {
+            return json_decode($err, true);
+          } 
+
         return json_decode($response, true);
     }
 }

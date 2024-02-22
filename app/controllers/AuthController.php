@@ -23,9 +23,12 @@ class AuthController extends BaseController {
             "Content-Type: application/json"
         ];
         $post_fields = json_encode(["username" => $_POST['username'], "password" => $_POST['password']]);
-        if(User::login('POST', LOGIN_URL, $headers, $post_fields)){
+        $resp = User::login('POST', LOGIN_URL, $headers, $post_fields);
+        var_dump($resp);
+        if($resp){
             return self::redirect('/');
         }
+        var_dump($resp);die;
         return self::redirectBack();
     }
 

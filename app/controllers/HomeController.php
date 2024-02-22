@@ -4,24 +4,23 @@ class HomeController extends BaseController
     public function __construct()
     {
         new User();
-        if(!User::isLoggedin()){
+        if (!User::isLoggedin()) {
             self::redirect('/auth/login');
         }
     }
 
     public static function index()
     {
-
-        $tasks = Task::getTasks();
-        return self::view('home',['tasks'=>$tasks]);
+        if (!empty($_GET['query'])) {
+            $tasks = Task::getTasks();
+            echo json_encode($tasks); 
+            return;
+        } else {
+            // The request is not AJAX
+            $tasks = Task::getTasks();
+            return self::view('home', ['tasks' => $tasks]);
+        }
     }
 
-    public static function about()
-    {
-        return self::view('about');
-    }
-    public static function contact()
-    {
-        return self::view('contact');
-    }
+    // other methods goes here ....
 }
