@@ -1,5 +1,4 @@
 <?php
-require './app/controllers/BaseController.php';
 class HomeController extends BaseController
 {
     public function __construct()

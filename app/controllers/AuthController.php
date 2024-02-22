@@ -1,5 +1,4 @@
 <?php
-require './app/controllers/BaseController.php';
 class AuthController extends BaseController {
 
     public function login()
@@ -13,7 +12,6 @@ class AuthController extends BaseController {
 
     public function  logout()
     {
-        $_SESSION = array();
         session_destroy();
         return self::redirect('/auth/login');
     }

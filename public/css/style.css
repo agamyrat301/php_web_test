@@ -1,0 +1,13 @@
+#img-preview {
+    display: none; 
+    width: 300px;   
+    border: 2px dashed #333;  
+    margin-bottom: 20px;
+  }
+  #img-preview img {  
+    width: 100%;
+    height: auto; 
+    display: block;   
+  }
+
+  
