@@ -18,6 +18,11 @@ class Task
     public static function getTasks(): Bool|array
     {
 
+        if (isset($_SESSION['user']['expires_at']) && $_SESSION['user']['expires_at'] < time()) {
+           // User::login();
+        }
+
+
         $headers = [
             "Authorization: Bearer ".User::$access_token,
         ];
