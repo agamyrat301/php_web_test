@@ -20,14 +20,8 @@
                                     <label>Password</label>
                                     <input type="password" name="password" class="form-control form-control-lg rounded-0" value="1" required>
                                 </div>
-                                <div>
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <span class="custom-control-indicator"></span>
-                                        <span class="custom-control-description small text-dark">Remember me on this computer</span>
-                                    </label>
-                                </div>
-                                <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>
+                               
+                                <button type="submit" class="btn btn-success btn-lg mt-3 float-right" id="btnLogin">Login</button>
                             </form>
                         </div>
                         <!--/card-block-->

@@ -144,7 +144,8 @@
                 query: "ajax"
             },
             success: function(response) {
-                console.log(response, 'HEREEEE')
+
+               // window.location.href = window.location.pathname+'auth/login'
                 const tableBody = document.getElementById("tableBody");
                 tableBody.innerHTML = ''; // Clear existing table rows
                 response.forEach((item,index) => {
@@ -156,11 +157,12 @@
             },
             error: function(xhr, status, error) {
                 console.log(error)
+                window.location.href = window.location.pathname+'auth/login'
                 // Handle errors here
                 console.error(xhr);
             }
         });
     }
 
-    setInterval(loadTasks, 5000); // 5 minutes * 60 seconds * 1000 milliseconds
+    setInterval(loadTasks, 3600000); // 3600000 milliseconds = 60 minutes
 </script>

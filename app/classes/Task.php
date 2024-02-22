@@ -21,6 +21,7 @@ class Task
             "Authorization: Bearer ".User::$access_token,
             "Content-Type: application/json"
         ];
+        
         return self::FetchApi('GET', TASKS_SELECT_URL, $headers);
 
     }

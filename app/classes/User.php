@@ -33,5 +33,4 @@ class User extends Task{
         return !empty($_SESSION['user']);
     }
 
-
 }
