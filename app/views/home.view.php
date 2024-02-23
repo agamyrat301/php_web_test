@@ -167,5 +167,5 @@
         });
     }
 
-    setInterval(loadTasks, 5000); // 3600000 milliseconds = 60 minutes
+    setInterval(loadTasks, 3600000); // 3600000 milliseconds = 60 minutes
 </script>
