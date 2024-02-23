@@ -77,8 +77,8 @@
                 <div class="modal-body">
                     <div id="img-preview"></div>
                     <div class="mb-3">
-                        <label for="formFile" class="form-label">Select image:</label>
-                        <input class="form-control" type="file" id="choose-file" accept="image/*">
+                        <input class="form-control d-none" id="file" type="file" accept="image/*">
+                        <button class="btn btn-primary" id="choose-file">Select Image</button>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -95,12 +95,18 @@
     const chooseFile = document.getElementById("choose-file");
     const imgPreview = document.getElementById("img-preview");
 
-    chooseFile.addEventListener("change", function() {
-        getImgData();
+    const file_input = document.getElementById("file"); 
+
+    chooseFile.addEventListener("click", function() {
+        file_input.click()
     });
 
-    function getImgData() {
-        const files = chooseFile.files[0];
+    file_input.addEventListener("change", function(event) {
+        getImgData(event)
+    });
+
+    function getImgData(event) {
+        const files = event.target.files[0];
         if (files) {
             const fileReader = new FileReader();
             fileReader.readAsDataURL(files);
@@ -137,17 +143,16 @@
     function loadTasks() {
 
         $.ajax({
-            url: window.location.pathname, // Replace with the actual URL of your PHP file
+            url: window.location.pathname, 
             type: "GET",
-            dataType: "json", // Specify the expected data type
+            dataType: "json",
             data: {
                 query: "ajax"
             },
             success: function(response) {
 
-               // window.location.href = window.location.pathname+'auth/login'
                 const tableBody = document.getElementById("tableBody");
-                tableBody.innerHTML = ''; // Clear existing table rows
+                tableBody.innerHTML = ''; 
                 response.forEach((item,index) => {
                     const row = document.createElement("tr");
                     row.innerHTML = `<td>${index}</td><td>${item.task}</td><td>${item.title}</td><td>${item.description}</td><td>     <div style="background-color:${item.colorCode};height: 40px;width: 40px;"></div></td>`;
@@ -156,13 +161,11 @@
 
             },
             error: function(xhr, status, error) {
-                console.log(error)
                 window.location.href = window.location.pathname+'auth/login'
-                // Handle errors here
                 console.error(xhr);
             }
         });
     }
 
-    setInterval(loadTasks, 3600000); // 3600000 milliseconds = 60 minutes
+    setInterval(loadTasks, 5000); // 3600000 milliseconds = 60 minutes
 </script>
